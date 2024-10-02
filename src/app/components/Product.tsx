@@ -2,9 +2,13 @@
 
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
+import { motion, useInView, useAnimation } from 'framer-motion'
 
 export default function ProductSection() {
   const backgroundTextRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { once: true, amount: 0.3 })
+  const controls = useAnimation()
 
   useEffect(() => {
     const textElement = backgroundTextRef.current;
@@ -14,30 +18,81 @@ export default function ProductSection() {
       const duration = offsetWidth / 100; // Ajusta la velocidad en función del ancho total
       textElement.style.setProperty('--scroll-duration', `${duration}s`);
     }
-  }, []);
+
+    if (isInView) {
+      controls.start("visible")
+    }
+  }, [isInView, controls]);
+
+  const contentVariants = {
+    hidden: { clipPath: 'inset(0 100% 0 0)' },
+    visible: { 
+      clipPath: 'inset(0 0% 0 0)',
+      transition: { 
+        duration: 1,
+        ease: 'easeInOut',
+      }
+    }
+  }
+
+  const backgroundTextVariants = {
+    hidden: { clipPath: 'inset(0 100% 0 0)' },
+    visible: { 
+      clipPath: 'inset(0 0% 0 0)',
+      transition: { 
+        duration: 1.5,
+        ease: 'easeInOut',
+      }
+    }
+  }
 
   return (
-    <section className="relative overflow-hidden bg-[#E8E8E8] py-24">
+    <section ref={sectionRef} className="relative overflow-hidden bg-[#E8E8E8] py-24">
       {/* Animated background text */}
-      <div 
+      <motion.div 
         ref={backgroundTextRef}
-        className="absolute top-[-25%] left-0 h-full flex items-center whitespace-nowrap animate-scroll"
-        style={{ width: 'max-content' }} // Esto hace que el contenedor se ajuste al contenido exacto
+        className="absolute top-[-25%] left-0 h-full flex items-center whitespace-nowrap"
+        style={{ width: 'max-content' }}
+        variants={backgroundTextVariants}
+        initial="hidden"
+        animate={controls}
       >
-        {/* Repetimos el contenido */}
-        <span className="inline-block font-libre text-[10vw] text-[#817A7A]">
-          Producto Destacado Producto Destacado&nbsp;
-        </span>
-        <span className="inline-block font-libre text-[10vw] text-[#817A7A]">
-          Producto Destacado Producto Destacado&nbsp;
-        </span>
-        <span className="inline-block font-libre text-[10vw] text-[#817A7A]">
-          Producto Destacado Producto Destacado&nbsp;
-        </span>
-      </div>
+        <motion.div 
+          className="flex"
+          animate={{ 
+            x: ['0%', '-50%']
+          }}
+          transition={{ 
+            x: { 
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 20,
+              ease: "linear"
+            },
+          }}
+        >
+          <span className="inline-block font-libre text-[10vw] text-[#817A7A]">
+            Producto Destacado Producto Destacado&nbsp;
+          </span>
+          <span className="inline-block font-libre text-[10vw] text-[#817A7A]">
+            Producto Destacado Producto Destacado&nbsp;
+          </span>
+          <span className="inline-block font-libre text-[10vw] text-[#817A7A]">
+            Producto Destacado Producto Destacado&nbsp;
+          </span>
+          <span className="inline-block font-libre text-[10vw] text-[#817A7A]">
+            Producto Destacado Producto Destacado&nbsp;
+          </span>
+        </motion.div>
+      </motion.div>
 
       {/* Content container */}
-      <div className="relative z-10 max-w-[75%] mx-auto px-4 flex flex-col lg:flex-row items-center justify-evenly">
+      <motion.div 
+        className="relative z-10 max-w-[75%] mx-auto px-4 flex flex-col lg:flex-row items-center justify-evenly"
+        variants={contentVariants}
+        initial="hidden"
+        animate={controls}
+      >
         {/* Image */}
         <div className="lg:w-1/3 mb-8 lg:mb-0">
           <Image
@@ -59,7 +114,7 @@ export default function ProductSection() {
             Ver todo
           </button>
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }

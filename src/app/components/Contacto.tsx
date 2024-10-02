@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 
 export default function ContactForm() {
@@ -10,6 +11,9 @@ export default function ContactForm() {
     email: '',
     mensaje: ''
   })
+
+  const formRef = useRef(null)
+  const isInView = useInView(formRef, { once: true, amount: 0.3 })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -25,19 +29,44 @@ export default function ContactForm() {
     setFormData({ nombre: '', apellidos: '', email: '', mensaje: '' })
   }
 
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { clipPath: 'inset(0 100% 0 0)' },
+    visible: { 
+      clipPath: 'inset(0 0% 0 0)',
+      transition: { 
+        duration: 0.5,
+        ease: 'easeInOut',
+      }
+    }
+  }
+
   return (
-    <section className="bg-[#E8E8E8] py-16 px-4">
-      <div className="max-w-[75%] mx-auto">
+    <section ref={formRef} className="bg-[#E8E8E8] py-16 px-4">
+      <motion.div 
+        className="max-w-[75%] mx-auto pt-10"
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
         <div className="grid md:grid-cols-2 gap-12">
-          <div>
-            <h2 className="text-5xl font-serif text-[#817A7A] mb-4">Contáctanos</h2>
-            <p className="text-[#817A7A] mb-8">
+          <motion.div variants={containerVariants}>
+            <motion.h2 className="md:text-7xl text-5xl font-serif text-[#817A7A] mb-4" variants={itemVariants}>Contáctanos</motion.h2>
+            <motion.p className="text-[#817A7A] mb-8 md:w-3/5" variants={itemVariants}>
               ¿Quieres que trabajemos juntos? Ingresa tus datos y nos pondremos en contacto contigo en breve. Esperamos tener noticias tuyas pronto.
-            </p>
-          </div>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="relative">
+            </motion.p>
+          </motion.div>
+          <motion.form onSubmit={handleSubmit} className="space-y-6" variants={containerVariants}>
+            <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6" variants={containerVariants}>
+              <motion.div className="relative" variants={itemVariants}>
                 <input
                   type="text"
                   id="nombre"
@@ -54,8 +83,8 @@ export default function ContactForm() {
                 >
                   Nombre <span className="text-[#817A7A]">(obligatorio)</span>
                 </label>
-              </div>
-              <div className="relative">
+              </motion.div>
+              <motion.div className="relative" variants={itemVariants}>
                 <input
                   type="text"
                   id="apellidos"
@@ -71,9 +100,9 @@ export default function ContactForm() {
                 >
                   Apellidos
                 </label>
-              </div>
-            </div>
-            <div className="relative">
+              </motion.div>
+            </motion.div>
+            <motion.div className="relative" variants={itemVariants}>
               <input
                 type="email"
                 id="email"
@@ -90,8 +119,8 @@ export default function ContactForm() {
               >
                 Correo electrónico <span className="text-[#999999]">(obligatorio)</span>
               </label>
-            </div>
-            <div className="relative">
+            </motion.div>
+            <motion.div className="relative" variants={itemVariants}>
               <textarea
                 id="mensaje"
                 name="mensaje"
@@ -108,16 +137,18 @@ export default function ContactForm() {
               >
                 Mensaje <span className="text-[#999999]">(obligatorio)</span>
               </label>
-            </div>
-            <Button 
-              type="submit"
-              className="bg-[#333333] text-white hover:bg-[#4a4a4a] px-8 py-3 rounded-full"
-            >
-              Enviar
-            </Button>
-          </form>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <Button 
+                type="submit"
+                className="bg-[#333333] text-white hover:bg-[#4a4a4a] px-8 py-3 rounded-full"
+              >
+                Enviar
+              </Button>
+            </motion.div>
+          </motion.form>
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }

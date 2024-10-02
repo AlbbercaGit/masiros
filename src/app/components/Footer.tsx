@@ -3,7 +3,7 @@ import { Instagram, Twitter, Facebook } from 'lucide-react'
 
 export default function Footer() {
   return (
-    <footer className="bg-[#E8E8E8] py-16 px-4">
+    <footer className="bg-[#E8E8E8] pb-16 px-4">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-5xl md:text-9xl font-serif  text-[#817A7A] mb-12 text-center">
           Parquet Masiros
