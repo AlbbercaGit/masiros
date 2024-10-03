@@ -125,7 +125,7 @@ export default function AboutPage() {
               ofreciendo una amplia gama de suelos de madera, laminados y
               vinilos.
             </p>
-            <p className="text-gray-600">
+            <p className="text-gray-600 mb-4">
               Visite nuestra exposición para explorar las colecciones
               disponibles y reciba asesoramiento de nuestro equipo experto, que
               le ayudará a encontrar la mejor opción para sus necesidades.
