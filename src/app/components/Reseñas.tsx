@@ -6,8 +6,7 @@ import { motion, useInView } from 'framer-motion'
 
 export default function ServicesSection() {
   const sectionRef = useRef(null)
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 })
-
+  const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
   const services = [
     {
       name: 'Servicio básico',

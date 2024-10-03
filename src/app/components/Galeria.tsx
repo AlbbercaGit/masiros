@@ -18,7 +18,7 @@ const images = [
 
 export default function Gallery() {
   const galleryRef = useRef(null)
-  const isInView = useInView(galleryRef, { once: true, amount: 0.3 })
+  const isInView = useInView(galleryRef, { once: true, amount: 0.15 })
 
   const containerVariants = {
     hidden: {},
