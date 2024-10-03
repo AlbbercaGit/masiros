@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { X, Instagram, Twitter, Facebook } from "lucide-react";
+import { X } from "lucide-react";
 
 const clipVariants = {
   hidden: { clipPath: "inset(0 100% 0 0)" },
@@ -214,9 +214,8 @@ export default function AboutPage() {
                 Ubicación
               </h3>
               <p className="text-sm text-center text-[#999999]">
-                Calle de ejemplo, 123
-                <br />
-                Nueva York, NY 12345
+                C/ Poeta Mas y Ros 83,<br />
+                46022 Valencia
               </p>
             </div>
             <div>
@@ -224,31 +223,22 @@ export default function AboutPage() {
                 Contacto
               </h3>
               <p className="text-sm text-center text-[#999999]">
-                <a href="mailto:correo@ejemplo.com" className="hover:underline">
-                  correo@ejemplo.com
-                </a>
-                <br />
-                (555) 555-5555
+                <a href="tel:+34963561749" className="hover:underline">+34 96 356 17 49</a><br />
+                <a href="mailto:masirosparquet@masirosparquet.com" className="hover:underline">masirosparquet@masirosparquet.com</a><br />
+                <a href="mailto:masirosparquet@masirosparquet.es" className="hover:underline">masirosparquet@masirosparquet.es</a>
               </p>
             </div>
             <div>
               <h3 className="text-xl text-center font-serif text-[#817A7A] mb-4">
-                Síguenos
+                Horario
               </h3>
-              <div className="flex justify-center space-x-4">
-                <Link href="#" className="text-[#999999] hover:text-[#817A7A]">
-                  <Instagram className="w-6 h-6" />
-                  <span className="sr-only">Instagram</span>
-                </Link>
-                <Link href="#" className="text-[#999999] hover:text-[#817A7A]">
-                  <Twitter className="w-6 h-6" />
-                  <span className="sr-only">Twitter</span>
-                </Link>
-                <Link href="#" className="text-[#999999] hover:text-[#817A7A]">
-                  <Facebook className="w-6 h-6" />
-                  <span className="sr-only">Facebook</span>
-                </Link>
-              </div>
+              <p className="text-sm text-center text-[#999999]">
+                Lun - Vie<br />
+                10:00 - 13:30<br />
+                17:00 - 20:00<br />
+                Sábado - Dom<br />
+                Cerrado
+              </p>
             </div>
           </div>
         </div>
