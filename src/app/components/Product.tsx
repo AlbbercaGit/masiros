@@ -15,7 +15,7 @@ export default function ProductSection() {
 
     if (textElement) {
       const { offsetWidth } = textElement;
-      const duration = offsetWidth / 100; // Ajusta la velocidad en función del ancho total
+      const duration = offsetWidth / 80; // Ajusta la velocidad en función del ancho total
       textElement.style.setProperty('--scroll-duration', `${duration}s`);
     }
 
