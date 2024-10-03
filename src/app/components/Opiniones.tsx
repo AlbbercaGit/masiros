@@ -99,13 +99,13 @@ export default function TestimonialCarousel() {
   return (
     <section ref={sectionRef} className="py-16 px-4 bg-[#E8E8E8]">
       <motion.div 
-        className="max-w-6xl mx-auto h-[50vh] font-libre"
+        className="max-w-6xl mx-auto font-libre"
         variants={variants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
       >
         <h2 className="text-4xl md:text-6xl text-[#333333] mb-12 text-center">Haz que se destaque.</h2>
-        <div className="relative overflow-hidden">
+        <div className="relative overflow-hidden mb-12">
           <div 
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * (100 / visibleTestimonials)}%)` }}
@@ -133,21 +133,25 @@ export default function TestimonialCarousel() {
             ))}
           </div>
         </div>
-        <div className="flex justify-center mt-8 space-x-4">
-          <button
+        <div className="flex justify-center mt-8 space-x-8">
+          <motion.button
             onClick={handlePrev}
-            className="bg-gray-800 text-white p-2 rounded-full"
+            className="w-12 h-12 flex items-center justify-center border border-[#333333] text-[#333333] rounded-full hover:bg-[#333333] hover:text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#333333] focus:ring-opacity-50"
+            // whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             aria-label="Previous testimonial"
           >
             <ChevronLeft className="w-6 h-6" />
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={handleNext}
-            className="bg-gray-800 text-white p-2 rounded-full"
+            className="w-12 h-12 flex items-center justify-center border border-[#333333] text-[#333333] rounded-full hover:bg-[#333333] hover:text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#333333] focus:ring-opacity-50"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             aria-label="Next testimonial"
           >
             <ChevronRight className="w-6 h-6" />
-          </button>
+          </motion.button>
         </div>
       </motion.div>
     </section>

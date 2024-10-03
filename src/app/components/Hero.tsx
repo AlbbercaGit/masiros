@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 
 const clipVariants = {
@@ -42,10 +42,26 @@ const containerVariants = {
 
 export default function Component() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
+      }
+    };
+
+    updateHeaderHeight();
+    window.addEventListener('resize', updateHeaderHeight);
+
+    return () => window.removeEventListener('resize', updateHeaderHeight);
+  }, []);
 
   return (
-    <div className="bg-[#CFCDC7] min-h-screen font-libre flex flex-col relative">
+    <div className="bg-[#CFCDC7] min-h-screen font-libre flex flex-col">
       <motion.header 
+        ref={headerRef}
         className="py-6 flex justify-between items-center w-full max-w-[75%] mx-auto relative z-20"
         initial="hidden"
         animate="visible"
@@ -71,10 +87,13 @@ export default function Component() {
           </ul>
         </nav>
       </motion.header>
-      <div className="flex flex-grow w-full max-w-[75%] mx-auto items-center relative z-10">
-        <main className="flex flex-col lg:flex-row items-center justify-between w-full">
+      <div 
+        className="flex-grow flex items-center w-full max-w-[75%] mx-auto relative z-10"
+        style={{ height: `calc(100vh - ${headerHeight}px)` }}
+      >
+        <main className="flex flex-col justify-evenly lg:flex-row items-center md:justify-between w-full h-full">
           <motion.div 
-            className="lg:w-1/2 mb-12 lg:mb-0"
+            className="lg:w-1/2  lg:mb-0"
             initial="hidden"
             animate="visible"
             variants={clipVariants}
@@ -85,12 +104,12 @@ export default function Component() {
               <br />
               <span className="mt-2 block">Masiros</span>
             </h2>
-            <p className="text-[#817A7A] mb-8 lg:text-2xl max-w-md font-almarai">
+            <p className="text-[#817A7A]  lg:text-2xl max-w-md font-almarai">
               Expertos en parquet calidad, experiencia y servicio garantizado
             </p>
           </motion.div>
           <motion.div 
-            className="lg:w-1/2 md:h-[700px] h-[300px]"
+            className="lg:w-1/2 h-[60%] md:h-[500px] lg:h-4/5"
             initial="hidden"
             animate="visible"
             variants={clipVariants}
@@ -101,7 +120,7 @@ export default function Component() {
               alt="Parquet flooring with geometric shapes"
               width={750}
               height={750}
-              className="h-full object-cover"
+              className="h-full w-full object-cover"
             />
           </motion.div>
         </main>
