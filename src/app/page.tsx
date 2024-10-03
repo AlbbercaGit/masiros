@@ -7,8 +7,9 @@ import Contacto from "./components/Contacto";
 import Galeria from "./components/Galeria";
 import Footer from "./components/Footer";
 import Marcas from "./components/Marcas";
-import './globals.css'; // Importa tus estilos globales
+import Mapa from "./components/Mapa";
 
+import "./globals.css";
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       <Galeria />
       <Contacto />
       <Marcas />
+      <Mapa />
       <Footer />
     </div>
   );

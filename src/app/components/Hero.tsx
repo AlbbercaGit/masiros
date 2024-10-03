@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -7,37 +7,37 @@ import { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 
 const clipVariants = {
-  hidden: { clipPath: 'inset(0 100% 0 0)' },
-  visible: { 
-    clipPath: 'inset(0 0% 0 0)',
-    transition: { duration: 0.8, ease: "easeOut" }
-  }
+  hidden: { clipPath: "inset(0 100% 0 0)" },
+  visible: {
+    clipPath: "inset(0 0% 0 0)",
+    transition: { duration: 0.8, ease: "easeOut" },
+  },
 };
 
 const menuVariants = {
-  closed: { 
+  closed: {
     opacity: 0,
     y: 20,
     transition: {
-      y: { stiffness: 1000 }
-    }
+      y: { stiffness: 1000 },
+    },
   },
   open: {
     opacity: 1,
     y: 0,
     transition: {
-      y: { stiffness: 1000, velocity: -100 }
-    }
-  }
+      y: { stiffness: 1000, velocity: -100 },
+    },
+  },
 };
 
 const containerVariants = {
   closed: {
-    transition: { staggerChildren: 0.05, staggerDirection: -1 }
+    transition: { staggerChildren: 0.05, staggerDirection: -1 },
   },
   open: {
-    transition: { staggerChildren: 0.07, delayChildren: 0.2 }
-  }
+    transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+  },
 };
 
 export default function Component() {
@@ -53,14 +53,14 @@ export default function Component() {
     };
 
     updateHeaderHeight();
-    window.addEventListener('resize', updateHeaderHeight);
+    window.addEventListener("resize", updateHeaderHeight);
 
-    return () => window.removeEventListener('resize', updateHeaderHeight);
+    return () => window.removeEventListener("resize", updateHeaderHeight);
   }, []);
 
   return (
     <div className="bg-[#CFCDC7] min-h-screen font-libre flex flex-col">
-      <motion.header 
+      <motion.header
         ref={headerRef}
         className="py-6 flex justify-between items-center w-full max-w-[75%] mx-auto relative z-20"
         initial="hidden"
@@ -69,7 +69,7 @@ export default function Component() {
       >
         <h1 className="md:text-3xl text-2xl text-[#333333]">Parquet Masiros</h1>
         <nav className="relative">
-          <button 
+          <button
             className="md:hidden flex flex-col space-y-1"
             onClick={() => setIsMenuOpen(true)}
             aria-label="Abrir menú"
@@ -78,21 +78,25 @@ export default function Component() {
             <span className="w-6 h-0.5 bg-[#333333]"></span>
           </button>
           <ul className="hidden md:flex font-almarai space-x-6 text-lg text-[#333333]">
-            <li>
-              <Link href="/acerca-de">Nosotros</Link>
+            <li className="relative">
+              <Link href="/acerca-de" className="hover:text-[#333333] nav-link">
+                Nosotros
+              </Link>
             </li>
-            <li>
-              <Link href="/contacto">Contacto</Link>
+            <li className="relative">
+              <Link href="/contacto" className="hover:text-[#333333] nav-link">
+                Contacto
+              </Link>
             </li>
           </ul>
         </nav>
       </motion.header>
-      <div 
+      <div
         className="flex-grow flex items-center w-full max-w-[75%] mx-auto relative z-10"
         style={{ height: `calc(100vh - ${headerHeight}px)` }}
       >
         <main className="flex flex-col justify-evenly lg:flex-row items-center md:justify-between w-full h-full">
-          <motion.div 
+          <motion.div
             className="lg:w-1/2  lg:mb-0"
             initial="hidden"
             animate="visible"
@@ -108,7 +112,7 @@ export default function Component() {
               Expertos en parquet calidad, experiencia y servicio garantizado
             </p>
           </motion.div>
-          <motion.div 
+          <motion.div
             className="lg:w-1/2 h-[60%] md:h-[500px] lg:h-4/5"
             initial="hidden"
             animate="visible"
@@ -127,7 +131,7 @@ export default function Component() {
       </div>
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div 
+          <motion.div
             className="fixed inset-0 bg-[#CFCDC7]/90 backdrop-blur-sm flex items-center justify-center md:hidden z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -143,28 +147,50 @@ export default function Component() {
             >
               <X size={24} />
             </motion.button>
-            <motion.ul 
+            <motion.ul
               className="text-center space-y-8"
               variants={containerVariants}
               initial="closed"
               animate="open"
               exit="closed"
             >
-              {['Nosotros', 'Contacto'].map((item) => (
-                <motion.li key={item} variants={menuVariants}>
-                  <Link 
-                    href={`/${item.toLowerCase()}`} 
-                    className="text-[#333333] text-3xl"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item}
-                  </Link>
-                </motion.li>
-              ))}
+             {["Nosotros", "Contacto"].map((item) => (
+               <motion.li key={item} variants={menuVariants}>
+                 <Link
+                   href={item === "Nosotros" ? "/acerca-de" : "/contacto"}
+                   className="text-[#333333] text-3xl"
+                   onClick={() => setIsMenuOpen(false)}
+                 >
+                   {item}
+                 </Link>
+               </motion.li>
+             ))}
             </motion.ul>
           </motion.div>
         )}
       </AnimatePresence>
+      <style jsx global>{`
+        .nav-link {
+          position: relative;
+          text-decoration: none;
+        }
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 2px;
+          bottom: -4px;
+          left: 0;
+          background-color: #333333;
+          transform: scaleX(0);
+          transform-origin: bottom right;
+          transition: transform 0.3s ease-out;
+        }
+        .nav-link:hover::after {
+          transform: scaleX(1);
+          transform-origin: bottom left;
+        }
+      `}</style>
     </div>
   );
 }

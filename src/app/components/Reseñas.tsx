@@ -9,22 +9,34 @@ export default function ServicesSection() {
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
   const services = [
     {
-      name: 'Servicio básico',
+      name: 'Suelos y Tarimas',
       price: '99 €',
       image: 'https://raw.githubusercontent.com/AlbbercaGit/videos/refs/heads/main/masiros/1.JPG',
-      description: 'Describe los detalles importantes, tales como el precio, el valor, la duración del servicio y por qué es exclusivo. También puedes usar estas secciones para mostrar distintos valores clave de tus productos o servicios.'
+      description: `Tarimas Flotantes y Macizas:
+Instalamos tarimas sin obra, brindando calidez y aislamiento.
+
+Suelos Laminados:
+Ofrecemos suelos laminados de alta calidad que imitan la madera.`
     },
     {
-      name: 'Servicio intermedio',
+      name: 'Baños y Cocinas',
       price: '149 €',
       image: 'https://raw.githubusercontent.com/AlbbercaGit/videos/refs/heads/main/masiros/3.JPG',
-      description: 'Describe los detalles importantes, tales como el precio, el valor, la duración del servicio y por qué es exclusivo. También puedes usar estas secciones para mostrar distintos valores clave de tus productos o servicios.'
+      description: `Parquet para Baños y Cocinas:
+Asesoramos sobre la mejor opción considerando la humedad, manteniendo la estética.`
     },
     {
-      name: 'Servicio avanzado',
+      name: 'Decoración y Mobiliario',
       price: '199 €',
       image: 'https://raw.githubusercontent.com/AlbbercaGit/videos/refs/heads/main/masiros/5.JPG',
-      description: 'Describe los detalles importantes, tales como el precio, el valor, la duración del servicio y por qué es exclusivo. También puedes usar estas secciones para mostrar distintos valores clave de tus productos o servicios.'
+      description: `Paneles Decorativos:
+Paneles decorativos y revestimientos de fácil instalación para cualquier espacio.
+
+Restauraciones y Lijados:
+Restauramos suelos de madera con lijado y barnizado.
+
+Puertas y Armarios:
+Fabricamos puertas, armarios y vestidores a medida sin necesidad de obra.`
     }
   ]
 
@@ -91,12 +103,24 @@ export default function ServicesSection() {
               >
                 {service.price}
               </motion.p>
-              <motion.p 
+              <motion.div 
                 className="text-lg text-[#817A7A]"
                 variants={itemVariants}
               >
-                {service.description}
-              </motion.p>
+                {service.description.split('\n\n').map((paragraph, i) => (
+                  <p key={i} className="mb-4">
+                    {paragraph.split('\n').map((line, j) => (
+                      <span key={j} className="block">
+                        {j === 0 ? (
+                          <strong>{line}</strong>
+                        ) : (
+                          line
+                        )}
+                      </span>
+                    ))}
+                  </p>
+                ))}
+              </motion.div>
             </motion.div>
           ))}
         </motion.div>

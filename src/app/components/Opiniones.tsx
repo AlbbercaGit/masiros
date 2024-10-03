@@ -8,33 +8,33 @@ import { motion, useInView } from 'framer-motion'
 const testimonials = [
   {
     id: 1,
-    name: 'Lindsey Beumer',
-    image: '/placeholder.svg?height=100&width=100',
-    quote: 'Todo comienza con una idea. Tal vez quieras comenzar un negocio.',
-  },
-  {
-    id: 2,
-    name: 'Keith Finley',
-    image: '/placeholder.svg?height=100&width=100',
-    quote: 'Todo comienza con una idea. Tal vez quieras comenzar un negocio.',
-  },
-  {
-    id: 3,
-    name: 'Laurie Payton',
-    image: '/placeholder.svg?height=100&width=100',
-    quote: 'Todo comienza con una idea. Tal vez quieras comenzar un negocio.',
-  },
-  {
-    id: 4,
-    name: 'Alex Johnson',
-    image: '/placeholder.svg?height=100&width=100',
-    quote: 'La innovación distingue a un líder de un seguidor.',
+    name: 'Mari Luz Caballero',
+    image: 'https://raw.githubusercontent.com/AlbbercaGit/videos/refs/heads/main/masiros/maria.png',
+    quote: '"¡Parece otra casa! Trato excelente y profesionales de confianza. ¡Lo recomendamos sin duda!',
   },
   {
     id: 5,
-    name: 'Maria Garcia',
-    image: '/placeholder.svg?height=100&width=100',
-    quote: 'El éxito es la suma de pequeños esfuerzos repetidos día tras día.',
+    name: 'María Benedicto',
+    image: 'https://raw.githubusercontent.com/AlbbercaGit/videos/refs/heads/main/masiros/maria.png',
+    quote: 'Experiencia muy satisfactoria. Pepe nos orientó perfectamente. Agradecidos por su seriedad y profesionalidad.',
+  },
+  {
+    id: 3,
+    name: 'Vicente Andujar',
+    image: 'https://raw.githubusercontent.com/AlbbercaGit/videos/refs/heads/main/masiros/vicente.png',
+    quote: 'Inmejorable experiencia. Pepe y Juan Carlos merecen reconocimiento. ¡Recomendamos esta empresa sin lugar a dudas!',
+  },
+  {
+    id: 4,
+    name: 'Antonio Garcerá Fernández',
+    image: 'https://raw.githubusercontent.com/AlbbercaGit/videos/refs/heads/main/masiros/image.png',
+    quote: 'Instalación del suelo laminado excepcional. Atención en la tienda impecable. ¡Recomendamos sus servicios sin dudarlo!',
+  },
+  {
+    id: 2,
+    name: 'Alexandra Mohr',
+    image: 'https://raw.githubusercontent.com/AlbbercaGit/videos/refs/heads/main/masiros/image.png',
+    quote: 'Nos decidimos por Quickstep después de visitar varios distribuidores. Masiros ofrecía la mejor solución para nuestros peldaños.',
   },
 ]
 
@@ -43,7 +43,7 @@ export default function TestimonialCarousel() {
   const [isAnimating, setIsAnimating] = useState(false)
   const [visibleTestimonials, setVisibleTestimonials] = useState(1)
   const sectionRef = useRef(null)
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 })
+  const isInView = useInView(sectionRef, { once: true, amount: 0.25 })
 
   const totalTestimonials = testimonials.length
 
@@ -104,7 +104,7 @@ export default function TestimonialCarousel() {
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
       >
-        <h2 className="text-4xl md:text-6xl text-[#333333] mb-12 text-center">Haz que se destaque.</h2>
+        <h2 className="text-4xl md:text-6xl text-[#333333] mb-12 text-center">Opiniones que hablan por sí mismas.</h2>
         <div className="relative overflow-hidden mb-12">
           <div 
             className="flex transition-transform duration-500 ease-in-out"
@@ -112,19 +112,19 @@ export default function TestimonialCarousel() {
           >
             {[...testimonials, ...testimonials.slice(0, visibleTestimonials)].map((testimonial, index) => (
               <div key={index} className={`w-full md:w-1/3 flex-shrink-0 px-4`}>
-                <div className="bg-white p-6 h-[350px] shadow-lg flex flex-col justify-between">
+                <div className="bg-white p-6 h-[320px] shadow-lg flex flex-col justify-between">
                   <div>
                     <div className="flex justify-center mb-4">
                       <Image
                         src={testimonial.image}
                         alt={testimonial.name}
-                        width={100}
-                        height={100}
+                        width={60}
+                        height={60}
                         className="rounded-full"
                       />
                     </div>
                     <blockquote className="text-center mb-4">
-                      <p className="text-xl md:text-2xl text-gray-600">"{testimonial.quote}"</p>
+                      <p className="text-xl md:text-xl text-gray-600">"{testimonial.quote}"</p>
                     </blockquote>
                   </div>
                   <p className="text-center text-lg md:text-xl font-almarai">{testimonial.name}</p>

@@ -20,7 +20,7 @@ const partners: Partner[] = [
 export default function PartnerLogos() {
   const sectionRef = useRef<HTMLElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 })
+  const isInView = useInView(sectionRef, { once: true, amount: 0.25 })
   const controls = useAnimation()
   const [containerWidth, setContainerWidth] = useState(0)
   const [containerPadding, setContainerPadding] = useState(0)

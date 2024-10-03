@@ -2,7 +2,6 @@
 
 import { useState, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Button } from "@/components/ui/button"
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -13,7 +12,8 @@ export default function ContactForm() {
   })
 
   const formRef = useRef(null)
-  const isInView = useInView(formRef, { once: true, amount: 0.3 })
+  const isInView = useInView(formRef, { once: true, amount: 0.25 })
+  const [isHovered, setIsHovered] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -49,6 +49,20 @@ export default function ContactForm() {
     }
   }
 
+  const buttonVariants = {
+    initial: {
+      scale: 1,
+    },
+    hover: {
+      scale: 1.05,
+    },
+  }
+
+  const clipPathVariants = {
+    initial: { clipPath: 'inset(0 100% 0 0)' },
+    hover: { clipPath: 'inset(0 0 0 0)' },
+  }
+
   return (
     <section ref={formRef} className="bg-[#E8E8E8] py-16 px-4">
       <motion.div 
@@ -79,7 +93,7 @@ export default function ContactForm() {
                 />
                 <label
                   htmlFor="nombre"
-                  className="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3  origin-[0] peer-focus:left-0 peer-focus:text-gray-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  className="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-gray-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
                   Nombre <span className="text-[#817A7A]">(obligatorio)</span>
                 </label>
@@ -96,7 +110,7 @@ export default function ContactForm() {
                 />
                 <label
                   htmlFor="apellidos"
-                  className="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3  origin-[0] peer-focus:left-0 peer-focus:text-gray-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  className="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-gray-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
                   Apellidos
                 </label>
@@ -115,7 +129,7 @@ export default function ContactForm() {
               />
               <label
                 htmlFor="email"
-                className="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3  origin-[0] peer-focus:left-0 peer-focus:text-gray-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-gray-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 Correo electrónico <span className="text-[#999999]">(obligatorio)</span>
               </label>
@@ -133,18 +147,46 @@ export default function ContactForm() {
               ></textarea>
               <label
                 htmlFor="mensaje"
-                className="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3  origin-[0] peer-focus:left-0 peer-focus:text-gray-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-gray-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 Mensaje <span className="text-[#999999]">(obligatorio)</span>
               </label>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <Button 
+              <motion.button
                 type="submit"
-                className="bg-[#333333] text-white hover:bg-[#4a4a4a] px-8 py-3 rounded-full"
+                className=" py-3 px-8 text-sm relative overflow-hidden bg-transparent text-[#333333] border border-[#333333]"
+                style={{
+                  borderTopLeftRadius: '20px',
+                  borderBottomRightRadius: '20px',
+                }}
+                variants={buttonVariants}
+                initial="initial"
+                whileHover="hover"
+                onHoverStart={() => setIsHovered(true)}
+                onHoverEnd={() => setIsHovered(false)}
+                transition={{ duration: 0.3 }}
               >
-                Enviar
-              </Button>
+                <motion.span 
+                  className="relative z-20 mix-blend-difference"
+                  initial={{ color: '#333333' }}
+                  animate={{ color: isHovered ? 'white' : '#333333' }}
+                  transition={{ duration: 0.3 }}
+                >
+                  Enviar
+                </motion.span>
+                <motion.div
+                  className="absolute inset-0 bg-[#333333] z-10"
+                  style={{
+                    // borderTopLeftRadius: '20px',
+                    // borderBottomRightRadius: '20px',
+                  }}
+                  variants={clipPathVariants}
+                  initial="initial"
+                  animate={isHovered ? "hover" : "initial"}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                />
+              </motion.button>
             </motion.div>
           </motion.form>
         </div>
