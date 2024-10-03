@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect, useRef } from 'react'
-import { X, Instagram, Twitter, Facebook } from 'lucide-react'
+import Image from "next/image";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { X, Instagram, Twitter, Facebook } from "lucide-react";
 
 const clipVariants = {
   hidden: { clipPath: "inset(0 100% 0 0)" },
@@ -12,7 +12,7 @@ const clipVariants = {
     clipPath: "inset(0 0% 0 0)",
     transition: { duration: 0.8, ease: "easeOut" },
   },
-}
+};
 
 const menuVariants = {
   closed: {
@@ -29,7 +29,7 @@ const menuVariants = {
       y: { stiffness: 1000, velocity: -100 },
     },
   },
-}
+};
 
 const containerVariants = {
   closed: {
@@ -38,7 +38,7 @@ const containerVariants = {
   open: {
     transition: { staggerChildren: 0.07, delayChildren: 0.2 },
   },
-}
+};
 
 const buttonVariants = {
   initial: {
@@ -47,30 +47,30 @@ const buttonVariants = {
   hover: {
     scale: 1.05,
   },
-}
+};
 
 const clipPathVariants = {
-  initial: { clipPath: 'inset(0 100% 0 0)' },
-  hover: { clipPath: 'inset(0 0 0 0)' },
-}
+  initial: { clipPath: "inset(0 100% 0 0)" },
+  hover: { clipPath: "inset(0 0 0 0)" },
+};
 
 export default function AboutPage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const headerRef = useRef<HTMLElement>(null)
-  const [headerHeight, setHeaderHeight] = useState(0)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
 
   useEffect(() => {
     const updateHeaderHeight = () => {
       if (headerRef.current) {
-        setHeaderHeight(headerRef.current.offsetHeight)
+        setHeaderHeight(headerRef.current.offsetHeight);
       }
-    }
+    };
 
-    updateHeaderHeight()
-    window.addEventListener("resize", updateHeaderHeight)
+    updateHeaderHeight();
+    window.addEventListener("resize", updateHeaderHeight);
 
-    return () => window.removeEventListener("resize", updateHeaderHeight)
-  }, [])
+    return () => window.removeEventListener("resize", updateHeaderHeight);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#E8E8E8]">
@@ -81,7 +81,12 @@ export default function AboutPage() {
         animate="visible"
         variants={clipVariants}
       >
-        <Link href="/" className="md:text-3xl text-2xl text-[#333333] font-serif">Parquet Masiros</Link>
+        <Link
+          href="/"
+          className="md:text-3xl text-2xl text-[#333333] font-serif"
+        >
+          Parquet Masiros
+        </Link>
         <nav className="relative">
           <button
             className="md:hidden flex flex-col space-y-1"
@@ -104,27 +109,35 @@ export default function AboutPage() {
 
       <main className="flex-grow py-16 px-6 flex justify-center items-center">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-stretch gap-5 h-full">
-          <motion.div 
+          <motion.div
             className="md:w-1/2 pr-8 flex flex-col justify-center"
             initial="hidden"
             animate="visible"
             variants={clipVariants}
           >
-            <h2 className="text-5xl font-serif text-gray-700 mb-6">Quiénes somos</h2>
+            <h2 className="text-5xl font-serif text-gray-700 mb-6">
+              Calidad y Confianza en Cada Paso
+            </h2>
             <p className="text-gray-600 mb-4">
-              Podrías contar la historia de tus orígenes, hablar sobre tu equipo, mencionar
-              los premios o reconocimientos, o compartir hitos. Aprovecha tu creatividad.
-              ¡Tú puedes! La manera en la que cuentas tu historia en línea puede marcar
-              la diferencia.
+              En Masiros Parquet, seleccionamos cuidadosamente las mejores
+              marcas, buscando siempre la más alta calidad en diseño. Somos el
+              principal distribuidor oficial de QUICK STEP en Valencia,
+              ofreciendo una amplia gama de suelos de madera, laminados y
+              vinilos.
             </p>
             <p className="text-gray-600">
-              No te preocupes por sonar profesional. Suena como tú. Hay más de 1900
-              millones de sitios web, pero tu historia es la que diferencia a tu lugar del
-              resto. Si te sientes bien con palabras y no quieres proponer nada en tu internet, es
-              una buena señal de que quizá aún tienes más trabajo por hacer.
+              Visite nuestra exposición para explorar las colecciones
+              disponibles y reciba asesoramiento de nuestro equipo experto, que
+              le ayudará a encontrar la mejor opción para sus necesidades.
+            </p>
+            <p className="text-gray-600">
+              Instalamos todo tipo de parquets: suelos laminados, tarimas
+              flotantes y maderas para espacios interiores y exteriores.
+              Garantizamos una instalación perfecta y total garantía en todos
+              nuestros servicios.
             </p>
           </motion.div>
-          <motion.div 
+          <motion.div
             className="md:w-1/2 mt-8 md:mt-0 flex items-center"
             initial="hidden"
             animate="visible"
@@ -141,7 +154,7 @@ export default function AboutPage() {
         </div>
       </main>
 
-      <motion.div 
+      <motion.div
         className="bg-[#342E2E] py-16 px-6"
         initial="hidden"
         animate="visible"
@@ -153,19 +166,18 @@ export default function AboutPage() {
             <motion.button
               className="font-semibold py-3 px-8 text-sm relative overflow-hidden bg-transparent text-white border border-white"
               style={{
-                borderTopLeftRadius: '20px',
-                borderBottomRightRadius: '20px',
+                borderTopLeftRadius: "20px",
+                borderBottomRightRadius: "20px",
               }}
               variants={buttonVariants}
               initial="initial"
               whileHover="hover"
-              
               transition={{ duration: 0.3 }}
             >
-              <motion.span 
+              <motion.span
                 className="relative z-20 mix-blend-difference"
-                initial={{ color: 'white' }}
-                whileHover={{ color: 'white', backgroundColor: '#342E2E' }}
+                initial={{ color: "white" }}
+                whileHover={{ color: "white", backgroundColor: "#342E2E" }}
                 transition={{ duration: 0.3 }}
               >
                 Ver servicios
@@ -173,8 +185,8 @@ export default function AboutPage() {
               <motion.div
                 className="absolute inset-0 bg-white z-10"
                 style={{
-                  borderTopLeftRadius: '20px',
-                  borderBottomRightRadius: '20px',
+                  borderTopLeftRadius: "20px",
+                  borderBottomRightRadius: "20px",
                 }}
                 variants={clipPathVariants}
                 initial="initial"
@@ -186,7 +198,7 @@ export default function AboutPage() {
         </div>
       </motion.div>
 
-      <motion.footer 
+      <motion.footer
         className="bg-[#E8E8E8] pb-16 px-4"
         initial="hidden"
         animate="visible"
@@ -198,21 +210,31 @@ export default function AboutPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
             <div>
-              <h3 className="text-xl text-center font-serif text-[#817A7A] mb-4">Ubicación</h3>
+              <h3 className="text-xl text-center font-serif text-[#817A7A] mb-4">
+                Ubicación
+              </h3>
               <p className="text-sm text-center text-[#999999]">
-                Calle de ejemplo, 123<br />
+                Calle de ejemplo, 123
+                <br />
                 Nueva York, NY 12345
               </p>
             </div>
             <div>
-              <h3 className="text-xl text-center font-serif text-[#817A7A] mb-4">Contacto</h3>
+              <h3 className="text-xl text-center font-serif text-[#817A7A] mb-4">
+                Contacto
+              </h3>
               <p className="text-sm text-center text-[#999999]">
-                <a href="mailto:correo@ejemplo.com" className="hover:underline">correo@ejemplo.com</a><br />
+                <a href="mailto:correo@ejemplo.com" className="hover:underline">
+                  correo@ejemplo.com
+                </a>
+                <br />
                 (555) 555-5555
               </p>
             </div>
             <div>
-              <h3 className="text-xl text-center font-serif text-[#817A7A] mb-4">Síguenos</h3>
+              <h3 className="text-xl text-center font-serif text-[#817A7A] mb-4">
+                Síguenos
+              </h3>
               <div className="flex justify-center space-x-4">
                 <Link href="#" className="text-[#999999] hover:text-[#817A7A]">
                   <Instagram className="w-6 h-6" />
@@ -273,5 +295,5 @@ export default function AboutPage() {
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }
