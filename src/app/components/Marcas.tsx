@@ -1,8 +1,8 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useAnimation } from 'framer-motion'
 
 interface Partner {
   name: string;
@@ -18,10 +18,36 @@ const partners: Partner[] = [
 ]
 
 export default function PartnerLogos() {
-  const sectionRef = useRef(null)
+  const sectionRef = useRef<HTMLElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 })
+  const controls = useAnimation()
+  const [containerWidth, setContainerWidth] = useState(0)
+  const [containerPadding, setContainerPadding] = useState(0)
 
-  const duplicatedPartners = [...partners, ...partners, ...partners, ...partners] // Duplica más para un scroll continuo
+  const duplicatedPartners = [...partners, ...partners, ...partners, ...partners]
+
+  useEffect(() => {
+    const updateContainerDimensions = () => {
+      if (containerRef.current) {
+        const styles = window.getComputedStyle(containerRef.current)
+        const paddingLeft = parseFloat(styles.paddingLeft)
+        const paddingRight = parseFloat(styles.paddingRight)
+        setContainerWidth(containerRef.current.offsetWidth)
+        setContainerPadding(paddingLeft + paddingRight)
+      }
+    }
+
+    updateContainerDimensions()
+    window.addEventListener('resize', updateContainerDimensions)
+    return () => window.removeEventListener('resize', updateContainerDimensions)
+  }, [])
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start("visible")
+    }
+  }, [isInView, controls])
 
   const containerVariants = {
     hidden: {},
@@ -43,13 +69,16 @@ export default function PartnerLogos() {
     }
   }
 
+  const logoWidth = (containerWidth - containerPadding) / 4 // Ajustamos el ancho del logo considerando el padding
+
   return (
     <section ref={sectionRef} className="px-4 bg-[#E8E8E8] overflow-hidden">
       <motion.div 
+        ref={containerRef}
         className="max-w-6xl mx-auto"
         variants={containerVariants}
         initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
+        animate={controls}
       >
         <motion.h2 
           className="text-4xl font-serif text-[#817A7A] mb-12 text-center"
@@ -66,9 +95,9 @@ export default function PartnerLogos() {
             }}
           >
             <motion.div 
-              className="flex space-x-4"
+              className="flex"
               animate={{ 
-                x: ['0%', '-100%']
+                x: [`0px`, `-${(containerWidth - containerPadding) * (partners.length / 4)}px`]
               }}
               transition={{ 
                 x: { 
@@ -78,12 +107,14 @@ export default function PartnerLogos() {
                   ease: "linear"
                 },
               }}
+              style={{ width: `${(containerWidth - containerPadding) * 2}px` }}
             >
               {duplicatedPartners.map((partner, index) => (
                 <motion.div 
                   key={`${partner.name}-${index}`} 
-                  className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-4"
+                  className="flex-shrink-0"
                   variants={itemVariants}
+                  style={{ width: `${logoWidth}px` }}
                 >
                   <div className="flex items-center justify-center h-32">
                     <Image

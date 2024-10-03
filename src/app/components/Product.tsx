@@ -1,27 +1,31 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { motion, useInView, useAnimation } from 'framer-motion'
 
 export default function ProductSection() {
   const backgroundTextRef = useRef<HTMLDivElement>(null);
-  const sectionRef = useRef(null)
+  const sectionRef = useRef<HTMLElement>(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 })
   const controls = useAnimation()
+  const [containerWidth, setContainerWidth] = useState(0)
 
   useEffect(() => {
-    const textElement = backgroundTextRef.current;
-
-    if (textElement) {
-      const { offsetWidth } = textElement;
-      const duration = offsetWidth / 80; // Ajusta la velocidad en función del ancho total
-      textElement.style.setProperty('--scroll-duration', `${duration}s`);
+    const updateContainerWidth = () => {
+      if (backgroundTextRef.current) {
+        setContainerWidth(backgroundTextRef.current.scrollWidth / 2)
+      }
     }
+
+    updateContainerWidth()
+    window.addEventListener('resize', updateContainerWidth)
 
     if (isInView) {
       controls.start("visible")
     }
+
+    return () => window.removeEventListener('resize', updateContainerWidth)
   }, [isInView, controls]);
 
   const contentVariants = {
@@ -60,23 +64,18 @@ export default function ProductSection() {
         <motion.div 
           className="flex"
           animate={{ 
-            x: ['0%', '-50%']
+            x: [`0px`, `-${containerWidth}px`]
           }}
           transition={{ 
             x: { 
               repeat: Infinity,
               repeatType: "loop",
-              duration: 20,
+              duration: 15,
               ease: "linear"
             },
           }}
+          style={{ width: `${containerWidth * 2}px` }}
         >
-          <span className="inline-block font-libre text-[10vw] text-[#817A7A]">
-            Producto Destacado Producto Destacado&nbsp;
-          </span>
-          <span className="inline-block font-libre text-[10vw] text-[#817A7A]">
-            Producto Destacado Producto Destacado&nbsp;
-          </span>
           <span className="inline-block font-libre text-[10vw] text-[#817A7A]">
             Producto Destacado Producto Destacado&nbsp;
           </span>
