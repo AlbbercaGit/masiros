@@ -163,7 +163,10 @@ export default function ProductSection() {
             {product.description}
           </p>
           <div className="flex items-center ">
-            <motion.button
+            <motion.a
+              href="https://www.quick-step.com.es/es-es"
+              target="_blank"
+              rel="noopener noreferrer"
               className={`py-3 px-8 text-sm relative overflow-hidden bg-transparent border transition-colors duration-300 ${
                 isHovered
                   ? "text-white border-white"
@@ -201,7 +204,7 @@ export default function ProductSection() {
                 animate={isHovered ? "hover" : "initial"}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               />
-            </motion.button>
+            </motion.a>
             <div className="relative w-40 h-20 ml-4">
               <Image
                 src={product.logo}
