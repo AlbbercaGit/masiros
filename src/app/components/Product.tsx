@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import Image from 'next/image'
 import { motion, useInView, useAnimation } from 'framer-motion'
 
@@ -23,30 +23,28 @@ export default function ProductSection() {
   const backgroundTextRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.25 })
   const controls = useAnimation()
-  const [containerWidth, setContainerWidth] = useState(0)
-  const [containerPadding, setContainerPadding] = useState(0)
+  const [textWidth, setTextWidth] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
 
-  useEffect(() => {
-    const updateContainerDimensions = () => {
-      if (backgroundTextRef.current) {
-        const styles = window.getComputedStyle(backgroundTextRef.current)
-        const paddingLeft = parseFloat(styles.paddingLeft)
-        const paddingRight = parseFloat(styles.paddingRight)
-        setContainerWidth(backgroundTextRef.current.scrollWidth)
-        setContainerPadding(paddingLeft + paddingRight)
-      }
-    }
+  const textContent = "Distribuidor Exclusivo "
+  const repeatedText = textContent.repeat(10) // Repeat the text to ensure smooth animation
 
-    updateContainerDimensions()
-    window.addEventListener('resize', updateContainerDimensions)
+  const updateTextWidth = useCallback(() => {
+    if (backgroundTextRef.current) {
+      setTextWidth(backgroundTextRef.current.scrollWidth / 2)
+    }
+  }, [])
+
+  useEffect(() => {
+    updateTextWidth()
+    window.addEventListener('resize', updateTextWidth)
 
     if (isInView) {
       controls.start("visible")
     }
 
-    return () => window.removeEventListener('resize', updateContainerDimensions)
-  }, [isInView, controls])
+    return () => window.removeEventListener('resize', updateTextWidth)
+  }, [isInView, controls, updateTextWidth])
 
   const contentVariants = {
     hidden: { clipPath: 'inset(0 100% 0 0)' },
@@ -80,9 +78,6 @@ export default function ProductSection() {
     hover: { clipPath: 'inset(0 0 0 0)' },
   }
 
-  const textContent = "Distribuidor Exclusivo "
-  const repeatedText = textContent.repeat(10) // Repeat the text to ensure smooth animation
-
   return (
     <section 
       ref={sectionRef} 
@@ -114,17 +109,17 @@ export default function ProductSection() {
           <motion.div
             className="flex"
             animate={{
-              x: [`0px`, `-${(containerWidth - containerPadding) / 2}px`],
+              x: [`0px`, `-${textWidth}px`],
             }}
             transition={{
               x: {
                 repeat: Infinity,
                 repeatType: "loop",
-                duration: 100,
+                duration: textWidth * 0.02, // Adjust this multiplier to change the overall speed
                 ease: "linear",
               },
             }}
-            style={{ width: `${containerWidth * 2}px` }}
+            style={{ width: `${textWidth * 2}px` }}
           >
             <span className="inline-block font-libre text-[10vw] text-[#817A7A]">
               {repeatedText}
