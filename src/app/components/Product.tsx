@@ -120,7 +120,7 @@ export default function ProductSection() {
               x: {
                 repeat: Infinity,
                 repeatType: "loop",
-                duration: 40,
+                duration: 100,
                 ease: "linear",
               },
             }}
