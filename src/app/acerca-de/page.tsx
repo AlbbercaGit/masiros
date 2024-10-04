@@ -162,7 +162,7 @@ export default function AboutPage() {
       >
         <div className="max-w-6xl mx-auto text-center">
           <h3 className="text-3xl font-serif text-white mb-6">Empezar</h3>
-          <Link href="/servicios" passHref>
+          <Link href="/" passHref>
             <motion.button
               className="font-semibold py-3 px-8 text-sm relative overflow-hidden bg-transparent text-white border border-white"
               style={{
